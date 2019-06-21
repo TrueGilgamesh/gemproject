@@ -2,7 +2,11 @@ const debug = require('debug')('website:server');
 const http = require('http');
 const app = require('./modules/app');
 const db = require('./modules/db');
-const config = require('./config');
+const minimist = require('minimist');
+
+const params = minimist(process.argv.slice(2));
+
+const config = require('./' + (params.config || 'config'));
 
 const port = config.server.port;
 
