@@ -81,7 +81,7 @@ exports.createUser = async function(login, password, name, role, master) {
 };
 
 exports.checkUser = async function(login, password) {
-  const user = await User.findOne({ login });
+  const user = await User.findOne({ login, deleted: { $ne: true } });
   return user !== null && (await user.checkPassword(password)) === true;
 };
 
