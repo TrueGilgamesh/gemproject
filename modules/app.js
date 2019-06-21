@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 // раздавать файлы из подкаталога public
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // обрабатывать тело запросов JSON
 app.use(express.json());

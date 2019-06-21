@@ -2,7 +2,7 @@ extends ../index
 
 mixin userList(users, role)
   h2= role === 'elf' ? 'Эльфы' : 'Гномы'
-  table
+  table.striped
     thead
       th Имя
       th= role === 'elf' ? 'Получил' : 'Добыл'
@@ -28,7 +28,9 @@ mixin userList(users, role)
                     | 
                   |#{fav.gemType.name}
           if role === 'gnome'
-            td= usr.master ? 'M' : ''
+            td
+              if usr.master
+                span.badge.teal.lighten-2.white-text M
           if user.master
             td
               a(href="/users/" + usr._id + "/delete?ref=" + ref)= usr.deleted ? 'Восстановить' : 'Удалить'
@@ -43,12 +45,15 @@ block pageContent
   form(action="/users", method="get")
     fieldset
       legend Отбор
-      label(for="name") Имя: 
-      input#name(type="text", name="name", value=filter.name)
-      | 
-      label(for="deleted") Удален: 
-      input#deleted(type="checkbox", name="deleted", checked=filter.deleted)
-      | 
-      input(type="submit", value="Отобрать")
+      div.row
+        div.input-field.col.s12.m6
+          input#name(type="text", name="name", value=filter.name)
+          label(for="name") Имя
+        div.switch
+          label
+            |Удаленные
+            input(type="checkbox", name="deleted", checked=filter.deleted)
+            span.lever
+      input.btn(type="submit", value="Отобрать")
   +userList(users, 'elf')
   +userList(users, 'gnome')

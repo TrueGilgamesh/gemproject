@@ -2,6 +2,11 @@ doctype html
 html
   head
     title= title
+    //- { Materialize
+    link(rel='stylesheet', href='/stylesheets/materialize.min.css')
+    script(src="/javascript/materialize.min.js")
+    //- } Materialize 
+    script(src="/javascript/initialize.js")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content

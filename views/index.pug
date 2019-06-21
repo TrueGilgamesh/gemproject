@@ -1,18 +1,21 @@
 extends layout
 
 block content
-  div
-    a(href="/") Главная
-    | 
-    a(href="/users") Пользователи
-    if user.master
-      | 
-      a(href="/settings") Настройки
-    if user.role === 'gnome'
-      | 
-      a(href="/gems") Драгоценности
-      | 
-      a(href="/gems/add") Добавить
-    | 
-    a(href="/logout") Выйти
-  block pageContent
+  nav
+    div.nav-wrapper
+      a.brand-logo(href="/") Драгострана
+      ul#nav-mobile.right.hide-on-med-and-down
+        li
+          a(href="/users") Пользователи
+        if user.master
+          li
+            a(href="/settings") Настройки
+        if user.role === 'gnome'
+          li
+            a(href="/gems") Драгоценности
+          li
+            a(href="/gems/add") Добавить
+        li
+          a(href="/logout") Выйти
+  div.container
+    block pageContent
