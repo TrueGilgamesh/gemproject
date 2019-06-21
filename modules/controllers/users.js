@@ -130,6 +130,11 @@ exports.update = (req, res, next) => {
     req.body.password,
     req.body.name,
     res.locals.user.master
+      ? req.body.master === 'on'
+        ? true
+        : false
+      : undefined,
+    res.locals.user.master
       ? req.body.deleted === 'on'
         ? true
         : false

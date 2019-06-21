@@ -139,13 +139,24 @@ exports.deleteUser = async function(id) {
   }
 };
 
-exports.updateUser = async function(id, login, password, name, deleted) {
+exports.updateUser = async function(
+  id,
+  login,
+  password,
+  name,
+  master,
+  deleted
+) {
   const user = await User.findById(id);
 
   if (user) {
     user.login = login;
     user.password = password;
     user.name = name;
+
+    if (master !== undefined) {
+      user.master = master;
+    }
 
     if (deleted !== undefined) {
       user.deleted = deleted;
