@@ -2,20 +2,17 @@ extends layout
 
 block content
   h1 Первоначальная настройка
-  form(action="/init", method="post")
+  form.pure-form.pure-form-stacked(action="/init", method="post")
     fieldset
       legend Мастер-гном системы
-      p
+      div
           label(for="login") Логин:
-          br
           input#login(type="text", name="login", value="master")
-      p
+      div
         label(for="password") Пароль:
-        br
         input#password(type="password", name="password")
-      p
+      div
         label(for="name") Имя:
-        br
         input#name(type="text", name="name")
-    p
-      input(type="submit", value="Сохранить")
+    div
+      input.pure-button(type="submit", value="Сохранить")

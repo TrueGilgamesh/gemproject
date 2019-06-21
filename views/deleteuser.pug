@@ -5,7 +5,7 @@ block content
   p Логин: #{user.login}
   p Имя: #{user.name}
   form(action="/users/" + user._id + "/delete", method="post")
-    input(type="submit", value=(user.deleted ? 'Восстановить' : 'Удалить'))
+    input.pure-button(type="submit", value=(user.deleted ? 'Восстановить' : 'Удалить'))
     input(type="hidden", name="ref", value=ref)
     | 
-    a(href=ref) Отменить
+    a.pure-button(href=ref) Отменить

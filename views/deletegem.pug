@@ -11,8 +11,8 @@ block content
   p Назначена вручную: #{gem.manualAssignment ? 'Да' : 'Нет'}
   p Владелец: #{gem.owner && gem.owner.name}
   p Статус: #{statusesMap[gem.status]}
-  form(action="/gems/" + gem._id + "/delete", method="post")
-    input(type="submit", value=(gem.deleted ? "Восстановить" : "Удалить"))
+  form.pure-form(action="/gems/" + gem._id + "/delete", method="post")
+    input.pure-button(type="submit", value=(gem.deleted ? "Восстановить" : "Удалить"))
     input(type="hidden", name="ref" value=ref)
     | 
-    a(href=ref) Отменить
+    a.pure-button(href=ref) Отменить

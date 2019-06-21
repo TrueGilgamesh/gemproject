@@ -3,19 +3,21 @@ extends ../index
 block pageContent
   h1 Настройки
   h2 Виды драгоценностей
-  form(action="/settings", method="get")
+  form.pure-form(action="/settings", method="get")
     fieldset
       legend Отбор
       label(for="name") Имя: 
       input#name(type="text", name="name" value=filter.name)
       | 
-      label(for="deleted") Удален: 
+      label(for="deleted")
       input#deleted(type="checkbox", name="deleted" checked=filter.deleted)
       | 
-      input(type="submit", value="Отобрать")
-  form(action="/gemtypes/add", method="get")
+      |Удален
+      | 
+      input.pure-button(type="submit", value="Отобрать")
+  form.pure-form(action="/gemtypes/add", method="get")
     fieldset
-      table
+      table.pure-table.pure-table-striped
         tbody
           each gemType in gemTypes
             tr
@@ -26,19 +28,19 @@ block pageContent
                 a(href="/gemtypes/" + gemType._id + "/delete?ref=" + ref)
                   = gemType.deleted ? 'Восстановить' : 'Удалить'
       p
-        input(type="number", name="number" value="1")
-        input(type="submit", value="Добавить")
+        input(type="number", name="number", value="1", min="1", max="100")
+        | 
+        input.pure-button(type="submit", value="Добавить")
   h2 Настройки распределения
-  form(action="/settings", method="post")
+  form.pure-form.pure-form-aligned(action="/settings", method="post")
     fieldset
-      p
+      div.pure-control-group
         label(for="c1") Равномерно: 
         input#c1(type="number", name="c1", value=settings.c1, min="0", max="10", required)
-      p
+      div.pure-control-group
         label(for="c2") Еженедельная радость: 
         input#c2(type="number", name="c2", value=settings.c2, min="0", max="10", required)
-      p
+      div.pure-control-group
         label(for="c3") По предпочтениям: 
         input#c3(type="number", name="c3", value=settings.c3, min="0", max="10", required)
-      p
-        input(type="submit", value="Сохранить")
+      input.pure-button(type="submit", value="Сохранить")

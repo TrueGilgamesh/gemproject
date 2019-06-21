@@ -5,13 +5,14 @@ block pageContent
   if gems.length === 0
     p Нет драгоценностей к распределению
   else
-    form(action="/gems/assign", method="get")
-      input(type="hidden", name="auto", value="1")
-      input(type="submit", value="Распределить драгоценности")
-    form(action="/gems/assign", method="post")
+    form.pure-form(action="/gems/assign", method="get")
+      fieldset
+        input(type="hidden", name="auto", value="1")
+        input.pure-button(type="submit", value="Распределить драгоценности")
+    form.pure-form(action="/gems/assign", method="post")
       fieldset
         legend Драгоценности к распределению
-        table
+        table.pure-table.pure-table-striped
           thead
             th Тип
             th Добыл
@@ -35,4 +36,4 @@ block pageContent
                       option(value=elf._id, selected=(assignedToId === elf._id))= elf.name
                 if auto
                   td= gem.assignedTo && gem.assignedTo.name
-      input(type="submit", value="Подтвердить распределение")
+      input.pure-button(type="submit", value="Подтвердить распределение")

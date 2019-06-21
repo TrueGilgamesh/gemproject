@@ -9,36 +9,37 @@ block pageContent
     else
       |Страница #{thisUser.role === 'elf' ? 'эльфа' : 'гнома'}
   h2
-    if isThisUser
-      |Ваши данные
-    else
-      |Данные #{thisUser.role === 'elf' ? 'эльфа' : 'гнома'}
-  form(action="/users/" + thisUser._id + "/update", method="post")
+  form.pure-form.pure-form-aligned(action="/users/" + thisUser._id + "/update", method="post")
     fieldset
-      p
+      legend
+        if isThisUser
+          |Ваши данные
+        else
+          |Данные #{thisUser.role === 'elf' ? 'эльфа' : 'гнома'}
+      div.pure-control-group
         label(for="login") Логин: 
         input#login(type="text", name="login", value=thisUser.login, disabled=disabled)
-      p
+      div.pure-control-group
         label(for="password") Пароль: 
         input#password(type="password", name="password", value=thisUser.password, disabled=disabled)
-      p
+      div.pure-control-group
         label(for="name") Имя: 
         input#name(type="text", name="name", value=thisUser.name, disabled=disabled)
       if thisUser.role === 'gnome'
-        p
+        div.pure-control-group
           label(for="master") Мастер: 
           input#master(type="checkbox", name="master", checked=thisUser.master, disabled=!user.master)
-      p
+      div.pure-control-group
         label(for="deleted") Удален: 
         input#deleted(type="checkbox", name="deleted", checked=thisUser.deleted, disabled=!user.master)
       if !disabled
-        input(type="submit", value="Изменить")
+        input.pure-button(type="submit", value="Изменить")
   if thisUser.role === 'elf'
     h2 Предпочтения
-    form(action="/users/" + thisUser._id + "/preferences/add", method="get")
+    form.pure-form(action="/users/" + thisUser._id + "/preferences/add", method="get")
       fieldset
         if thisUser.favorites !== undefined && thisUser.favorites.length > 0
-          table
+          table.pure-table.pure-table-striped
             thead
               th Тип
               th Предпочтение
@@ -53,7 +54,8 @@ block pageContent
           p
             span Добавить: 
             input(type="number", name="number", min="0" max="10", value="0", required)
-            input(type="submit", value="Изменить")
+            | 
+            input.pure-button(type="submit", value="Изменить")
   p
     span Дата регистрации: 
     span= thisUser.registrationDate ? thisUser.registrationDate.toLocaleString() : 'Никогда'
@@ -71,7 +73,7 @@ block pageContent
     if thisUser.receivedGems.length === 0
       p Нет полученных драгоценностей
     else
-      table
+      table.pure-table.pure-table-striped
         thead
           th Тип
           th Количество
@@ -81,19 +83,20 @@ block pageContent
               td= gem.type.name
               td= gem.number
     h2 Назначенные, но неподтверждённые драгоценности
-    form(action="/users/" + thisUser._id + "/confirm", method="post")
+    form.pure-form(action="/users/" + thisUser._id + "/confirm", method="post")
       fieldset
         if thisUser.assignedGems.length === 0
           p Нет назначенных неподтверждённых драгоценностей
         else
-          table
+          table.pure-table.pure-table-striped
             thead
               th Тип
               th Дата<br>добычи
               th Дата<br>назначения
               th Добыл
               th Назначена<br>вручную
-              th
+              if !disabled && !user.master
+                th
             tbody
               each gem in thisUser.assignedGems
                 tr
@@ -102,18 +105,18 @@ block pageContent
                   td= gem.assignDate && gem.assignDate.toLocaleString()
                   td= gem.miner && gem.miner.name
                   td= gem.manualAssignment ? 'Да' : 'Нет'
-                  td
-                    if !disabled && !user.master
+                  if !disabled && !user.master
+                    td
                       input(type="checkbox", name="gem[" + gem._id + "]")
           if !disabled && !user.master
             p
-              input(type="submit", value="Подтвердить выбранные")
+              input.pure-button(type="submit", value="Подтвердить выбранные")
   if thisUser.role === 'gnome'
     h2 Добытые драгоценности
     if thisUser.minedGemsList.length === 0
       p Нет добытых драгоценностей
     else
-      table
+      table.pure-table.pure-table-striped
         thead
           th Тип
           th Количество

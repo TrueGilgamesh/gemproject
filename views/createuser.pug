@@ -2,27 +2,26 @@ extends layout
 
 block content
   h1 Создание #{role === 'elf' ? 'эльфа' : 'гнома'}
-  form(action="/users/create", method="post")
+  form.pure-form.pure-form-stacked(action="/users/create", method="post")
     fieldset
       legend Данные #{role === 'elf' ? 'эльфа' : 'гнома'}
-      p
+      div
         label(for="login") Логин:
-        br
         input#login(type="text", name="login", required)
-      p
+      div
         label(for="password") Пароль:
-        br
         input#password(type="password", name="password", required)
-      p
+      div
         label(for="name") Имя:
-        br
         input#name(type="text", name="name", required)
       if role === 'gnome'
-        p
-          label(for="master") Мастер:
-          input#master(type="checkbox", name="master")
+        div
+          label.pure-checkbox(for="master")
+            input#master(type="checkbox", name="master")
+            | 
+            |Мастер
       input(type="hidden", name="role" value=role)
-    p
-      input(type="submit", value="Создать")
+    div
+      input.pure-button(type="submit", value="Создать")
       | 
-      a(href="/users") Отменить
+      a.pure-button(href="/users") Отменить

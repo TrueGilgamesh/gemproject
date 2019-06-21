@@ -2,17 +2,15 @@ extends layout
 
 block content
   h1 Редактирование вида драгоценности
-  form(action="/gemtypes/" + gemType._id + "/edit", method="post")
+  form.pure-form.pure-form-aligned(action="/gemtypes/" + gemType._id + "/edit", method="post")
     fieldset
-      p
+      div.pure-control-group
         label(for="name") Имя
-        br
         input#name(type="text", name="name" value=gemType.name, required)
-      p
+      div.pure-control-group
         label(for="deleted") Удален 
         input#deleted(type="checkbox", name="deleted" checked=gemType.deleted)
-      p
-        input(type="submit", value="Изменить")
-        input(type="hidden", name="ref", value=ref)
-        | 
-        a(href=ref) Отменить
+      input.pure-button(type="submit", value="Изменить")
+      input(type="hidden", name="ref", value=ref)
+      | 
+      a.pure-button(href=ref) Отменить

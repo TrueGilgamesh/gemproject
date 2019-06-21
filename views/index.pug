@@ -1,18 +1,19 @@
 extends layout
 
 block content
-  div
-    a(href="/") Главная
-    | 
-    a(href="/users") Пользователи
+  div.pure-menu.pure-menu-horizontal
+    a.pure-menu-heading.pure-menu-link(href="/") Главная
+    ul.pure-menu-list
+    li.pure-menu-item
+      a.pure-menu-link(href="/users") Пользователи
     if user.master
-      | 
-      a(href="/settings") Настройки
+      li.pure-menu-item
+        a.pure-menu-link(href="/settings") Настройки
     if user.role === 'gnome'
-      | 
-      a(href="/gems") Драгоценности
-      | 
-      a(href="/gems/add") Добавить
-    | 
-    a(href="/logout") Выйти
+      li.pure-menu-item
+        a.pure-menu-link(href="/gems") Драгоценности
+      li.pure-menu-item
+        a.pure-menu-link(href="/gems/add") Добавить
+    li.pure-menu-item
+      a.pure-menu-link(href="/logout") Выйти
   block pageContent

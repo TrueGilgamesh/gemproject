@@ -14,20 +14,21 @@ mixin preference(preference)
     input#priority(type="number", name="priority" min="1" max="10", value=priority, required)
     if preference
       | 
-      label(for="deleted") Удалить 
-      input(type="checkbox", name='deleted[' + favGemTypeId + ']', value="on")
+      label.pure-checkbox(for="deleted")
+        input(type="checkbox", name='deleted[' + favGemTypeId + ']', value="on")
+        | 
+        |Удалить 
 
 block content
   h1 Редактирование предпочтений
-  form(action="/users/" + id + "/preferences/add", method="post")
+  form.pure-form(action="/users/" + id + "/preferences/add", method="post")
     fieldset
       legend Предпочтения
-      p 1 - не очень нравится, 10 - очень нравится
       if user.favorites !== undefined
         each fav in user.favorites
           +preference(fav)
       - for (let n = 0; n < number; n++)
         +preference
-    input(type="submit", value="Изменить")
+    input.pure-button(type="submit", value="Изменить")
     | 
-    a(href="/users/" + id) Отменить
+    a.pure-button(href="/users/" + id) Отменить

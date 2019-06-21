@@ -2,11 +2,11 @@ extends layout
 
 block content
   h1 #{gemType.deleted ? 'Восстановить' : 'Удалить'} вид драгоценности?
-  form(action="/gemtypes/" + gemType._id + "/delete", method="post")
+  form.pure-form(action="/gemtypes/" + gemType._id + "/delete", method="post")
     fieldset
       p Имя: #{gemType.name}
       p
-        input(type="submit", value=(gemType.deleted ? 'Восстановить' : 'Удалить'))
+        input.pure-button(type="submit", value=(gemType.deleted ? 'Восстановить' : 'Удалить'))
         input(type="hidden", name="ref", value=ref)
         | 
-        a(href=ref) Отменить
+        a.pure-button(href=ref) Отменить

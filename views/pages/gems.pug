@@ -2,77 +2,72 @@ extends ../index
 
 block pageContent
   h1 Драгоценности
-  form(action="/gems", method="get")
+  form.pure-form.pure-form-stacked(action="/gems", method="get")
     fieldset
       legend Отбор
-      |Владелец:
-      | 
-      select(name="owner")
-        option(value="")
-        each elf in elves
-          option(value=elf._id, selected=(elf._id == query.owner))= elf.name
-      | 
-      |Добыл:
-      | 
-      select(name="miner")
-        option(value="")
-        each gnome in gnomes
-          option(value=gnome._id, selected=(gnome._id == query.miner))= gnome.name
-      | 
-      |Распределил:
-      | 
-      select(name="assignedBy")
-        option(value="")
-        each master in masters
-          option(value=master._id, selected=(master._id == query.assignedBy))= master.name
-      | 
-      |Тип:
-      | 
-      select(name="type")
-        option(value="")
-        each gemType in gemTypes
-          option(value=gemType._id, selected=(gemType._id == query.type))= gemType.name
-      | 
-      |Статус:
-      | 
-      select(name="status")
-        option(value="")
-        each status in statuses
-          option(value=status._id, selected=(status._id == query.status))= status.name
-      | 
-      |Удалена:
-      | 
-      input(type="checkbox", name="deleted", checked=query.deleted)
-      br
-      |Назначены:
-      | 
-      input(type="date", name="assignDateBegin", value=query.assignDateBegin)
-      | 
-      |-
-      |
-      input(type="date", name="assignDateEnd", value=query.assignDateEnd)
-      | 
-      |Подтверждены:
-      | 
-      input(type="date", name="confirmDateBegin", value=query.confirmDateBegin)
-      | 
-      |-
-      |
-      input(type="date", name="confirmDateEnd", value=query.confirmDateEnd)
-      | 
-      input(type="submit", value="Отобрать")
+      div.pure-g
+        div.pure-g.pure-u-1.pure-u-md-1-4
+          div.pure-u-1
+            label Владелец
+            select.pure-u-23-24(name="owner")
+              option(value="")
+              each elf in elves
+                option(value=elf._id, selected=(elf._id == query.owner))= elf.name
+          div.pure-u-1
+            label Добыл
+            select.pure-u-23-24(name="miner")
+              option(value="")
+              each gnome in gnomes
+                option(value=gnome._id, selected=(gnome._id == query.miner))= gnome.name
+        div.pure-g.pure-u-1.pure-u-md-1-4
+          div.pure-u-1
+            label Назначены
+            select.pure-u-23-24(name="assignedBy")
+              option(value="")
+              each master in masters
+                option(value=master._id, selected=(master._id == query.assignedBy))= master.name
+          div.pure-u-1
+            label Тип
+            select.pure-u-23-24(name="type")
+              option(value="")
+              each gemType in gemTypes
+                option(value=gemType._id, selected=(gemType._id == query.type))= gemType.name
+        fieldset.pure-group.pure-u-1.pure-u-md-1-4
+          legend Назначены
+          input.pure-u-23-24(type="date", name="assignDateBegin", value=query.assignDateBegin)
+          input.pure-u-23-24(type="date", name="assignDateEnd", value=query.assignDateEnd)
+        fieldset.pure-group.pure-u-1.pure-u-md-1-4
+          legend Подтверждены
+          input.pure-u-23-24(type="date", name="confirmDateBegin", value=query.confirmDateBegin)
+          input.pure-u-23-24(type="date", name="confirmDateEnd", value=query.confirmDateEnd)
+        div.pure-u-1.pure-u-md-1-4
+          label Статус
+          select.pure-u-23-24(name="status")
+            option(value="")
+            each status in statuses
+              option(value=status._id, selected=(status._id == query.status))= status.name
+        div.pure-g.pure-u-1.pure-u-md-1-4
+          div.pure-u-23-24 &nbsp;
+          label.pure-checkbox.pure-u-23-24
+            input.pure-button(type="checkbox", name="deleted", checked=query.deleted)
+            | 
+            |Удаленные
+        input.pure-button.pure-u-1.pure-u-md-1-2(type="submit", value="Отобрать")
   if user.master
-    form(action="/gems/assign", method="get")
-      input(type="submit", value="Распределить")
-  table
+    form.pure-form(action="/gems/assign", method="get")
+      fieldset
+        legend Распределение
+        input.pure-button(type="submit", value="Распределить")
+  h2 Список
+  table.pure-table.pure-table-striped
     thead
       th Тип
-      th Дата<br>добычи
-      th Дата<br>назначения
-      th Дата<br>подтверждения<br>передачи
+      th Дата добычи
+      th Дата назначения
+      th Дата подтверждения передачи
       th Добыл
       th Назначена
-      th Назначена<br>вручную
+      th Назначена вручную
       th Владелец
       th Статус
       th
