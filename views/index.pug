@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  div
+    a(href="/") Главная
+    | 
+    a(href="/users") Пользователи
+    if user.master
+      | 
+      a(href="/settings") Настройки
+    if user.role === 'gnome'
+      | 
+      a(href="/gems") Драгоценности
+      | 
+      a(href="/gems/add") Добавить
+    | 
+    a(href="/logout") Выйти
+  block pageContent

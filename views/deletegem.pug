@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{gem.deleted ? "Восстановить" : "Удалить"} драгоценность?
+  p Тип: #{gem.type.name}
+  p Дата добычи #{gem.assignDate && gem.assignDate.toLocaleString()}
+  p Дата назначения: #{gem.mineDate.toLocaleString()}
+  p Дата подтверждения передачи: #{gem.confirmDate && gem.confirmDate.toLocaleString()}
+  p Добыл: #{gem.miner && gem.miner.name}
+  p Назначена: #{gem.assignedBy && gem.assignedBy.name}
+  p Назначена вручную: #{gem.manualAssignment ? 'Да' : 'Нет'}
+  p Владелец: #{gem.owner && gem.owner.name}
+  p Статус: #{statusesMap[gem.status]}
+  form(action="/gems/" + gem._id + "/delete", method="post")
+    input(type="submit", value=(gem.deleted ? "Восстановить" : "Удалить"))
+    input(type="hidden", name="ref" value=ref)
+    | 
+    a(href=ref) Отменить

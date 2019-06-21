@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 #{user.deleted ? 'Восстановить' : 'Удалить'} пользователя?
+  p Логин: #{user.login}
+  p Имя: #{user.name}
+  form(action="/users/" + user._id + "/delete", method="post")
+    input(type="submit", value=(user.deleted ? 'Восстановить' : 'Удалить'))
+    input(type="hidden", name="ref", value=ref)
+    | 
+    a(href=ref) Отменить

@@ -1,0 +1,26 @@
+extends ../index
+
+block pageContent
+  h1 Добавление драгоценностей
+  if gemTypes
+    form(action="/gems/add", method="post")
+      fieldset
+        legend Добавляемые драгоценности
+        - for (let i = 1; i <= num; i++)
+          p
+            select#gemtype(name="gemtype" required)
+              option(value="") Выберите драгоценность
+              each gemType in gemTypes
+                option(value=gemType._id)= gemType.name
+            | 
+            input#number(type="number", name="number" min="1" max="1000" required value=1)
+        input(type="submit", value="Добавить")
+  else
+    form(action="/gems/add", method="get")
+      fieldset
+        legend Добавить драгоценности
+        p
+          label(for="num") Количество: 
+          input#num(type="number", name="num" value="1" min="1" max="100" required)
+          | 
+          input(type="submit", value="Добавить")

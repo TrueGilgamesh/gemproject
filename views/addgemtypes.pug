@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Добавление видов драгоценностей
+  form(action="/gemtypes/add", method="post")
+    fieldset
+      legend Добавляемые виды драгоценностей
+      - for (let n = 0; n < number; n++)
+        p
+          input(type="text", name="name")
+    input(type="submit", value="Добавить")
+    | 
+    a(href="/settings") Отменить

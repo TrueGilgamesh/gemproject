@@ -1,0 +1,54 @@
+extends ../index
+
+mixin userList(users, role)
+  h2= role === 'elf' ? 'Эльфы' : 'Гномы'
+  table
+    thead
+      th Имя
+      th= role === 'elf' ? 'Получил' : 'Добыл'
+        |<br>драгоценностей
+      if role === 'elf'
+        th Любимые<br>драгоценности
+      if role === 'gnome'
+        th Мастер
+      th
+    tbody
+      each usr in users.filter(u => u.role === role)
+        tr
+          td
+            a(href="/users/" + usr._id)= usr.name
+          td= role === 'elf' ? usr.hasGems : usr.minedGems
+          if role === 'elf'
+            td
+              if usr.favorites
+                - let n = 1;
+                for fav in usr.favorites.slice(0, 3)
+                  if n++ !== 1
+                    |,
+                    | 
+                  |#{fav.gemType.name}
+          if role === 'gnome'
+            td= usr.master ? 'M' : ''
+          if user.master
+            td
+              a(href="/users/" + usr._id + "/delete?ref=" + ref)= usr.deleted ? 'Восстановить' : 'Удалить'
+  if user.master
+    p  
+      form(action="/users/create", method="get")
+          input(type="hidden", name="role" value=role)
+          input(type="submit", value="Создать")
+
+block pageContent
+  h1 Пользователи
+  form(action="/users", method="get")
+    fieldset
+      legend Отбор
+      label(for="name") Имя: 
+      input#name(type="text", name="name", value=filter.name)
+      | 
+      label(for="deleted") Удален: 
+      input#deleted(type="checkbox", name="deleted", checked=filter.deleted)
+      | 
+      input(type="submit", value="Отобрать")
+  +userList(users, 'elf')
+  +userList(users, 'gnome')

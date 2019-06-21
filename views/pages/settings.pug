@@ -1,0 +1,44 @@
+extends ../index
+
+block pageContent
+  h1 Настройки
+  h2 Виды драгоценностей
+  form(action="/settings", method="get")
+    fieldset
+      legend Отбор
+      label(for="name") Имя: 
+      input#name(type="text", name="name" value=filter.name)
+      | 
+      label(for="deleted") Удален: 
+      input#deleted(type="checkbox", name="deleted" checked=filter.deleted)
+      | 
+      input(type="submit", value="Отобрать")
+  form(action="/gemtypes/add", method="get")
+    fieldset
+      table
+        tbody
+          each gemType in gemTypes
+            tr
+              td= gemType.name
+              td
+                a(href="/gemtypes/" + gemType._id + "/edit?ref=" + ref) Изменить
+              td
+                a(href="/gemtypes/" + gemType._id + "/delete?ref=" + ref)
+                  = gemType.deleted ? 'Восстановить' : 'Удалить'
+      p
+        input(type="number", name="number" value="1")
+        input(type="submit", value="Добавить")
+  h2 Настройки распределения
+  form(action="/settings", method="post")
+    fieldset
+      p
+        label(for="c1") Равномерно: 
+        input#c1(type="number", name="c1", value=settings.c1, min="0", max="10", required)
+      p
+        label(for="c2") Еженедельная радость: 
+        input#c2(type="number", name="c2", value=settings.c2, min="0", max="10", required)
+      p
+        label(for="c3") По предпочтениям: 
+        input#c3(type="number", name="c3", value=settings.c3, min="0", max="10", required)
+      p
+        input(type="submit", value="Сохранить")

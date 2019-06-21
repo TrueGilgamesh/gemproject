@@ -1,0 +1,38 @@
+extends ../index
+
+block pageContent
+  h1 Распределение драгоценностей
+  if gems.length === 0
+    p Нет драгоценностей к распределению
+  else
+    form(action="/gems/assign", method="get")
+      input(type="hidden", name="auto", value="1")
+      input(type="submit", value="Распределить драгоценности")
+    form(action="/gems/assign", method="post")
+      fieldset
+        legend Драгоценности к распределению
+        table
+          thead
+            th Тип
+            th Добыл
+            th Дата<br>добычи
+            th Владелец
+            if auto
+              th Назначен<br>алгоритмом
+          tbody
+            each gem in gems
+              - const assignedToId = gem.assignedTo && gem.assignedTo._id;
+              input(type="hidden", name="gem", value=gem._id)
+              input(type="hidden", name="assigned", value=assignedToId)
+              tr
+                td= gem.type && gem.type.name
+                td= gem.miner && gem.miner.name
+                td= gem.mineDate && gem.mineDate.toLocaleString()
+                td
+                  select(name="owner", required)
+                    option(value="")
+                    each elf in elves
+                      option(value=elf._id, selected=(assignedToId === elf._id))= elf.name
+                if auto
+                  td= gem.assignedTo && gem.assignedTo.name
+      input(type="submit", value="Подтвердить распределение")

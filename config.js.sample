@@ -1,0 +1,18 @@
+module.exports = {
+  server: {
+    port: 3000
+  },
+  session: {
+    name: 'session',
+    secret: 'Hyperion Cantos',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  },
+  database: {
+    connectionString: 'mongodb://localhost:27017/myapp',
+    connectionOptions: {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  }
+};

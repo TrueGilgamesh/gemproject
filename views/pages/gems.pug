@@ -1,0 +1,93 @@
+extends ../index
+
+block pageContent
+  h1 Драгоценности
+  form(action="/gems", method="get")
+    fieldset
+      legend Отбор
+      |Владелец:
+      | 
+      select(name="owner")
+        option(value="")
+        each elf in elves
+          option(value=elf._id, selected=(elf._id == query.owner))= elf.name
+      | 
+      |Добыл:
+      | 
+      select(name="miner")
+        option(value="")
+        each gnome in gnomes
+          option(value=gnome._id, selected=(gnome._id == query.miner))= gnome.name
+      | 
+      |Распределил:
+      | 
+      select(name="assignedBy")
+        option(value="")
+        each master in masters
+          option(value=master._id, selected=(master._id == query.assignedBy))= master.name
+      | 
+      |Тип:
+      | 
+      select(name="type")
+        option(value="")
+        each gemType in gemTypes
+          option(value=gemType._id, selected=(gemType._id == query.type))= gemType.name
+      | 
+      |Статус:
+      | 
+      select(name="status")
+        option(value="")
+        each status in statuses
+          option(value=status._id, selected=(status._id == query.status))= status.name
+      | 
+      |Удалена:
+      | 
+      input(type="checkbox", name="deleted", checked=query.deleted)
+      br
+      |Назначены:
+      | 
+      input(type="date", name="assignDateBegin", value=query.assignDateBegin)
+      | 
+      |-
+      |
+      input(type="date", name="assignDateEnd", value=query.assignDateEnd)
+      | 
+      |Подтверждены:
+      | 
+      input(type="date", name="confirmDateBegin", value=query.confirmDateBegin)
+      | 
+      |-
+      |
+      input(type="date", name="confirmDateEnd", value=query.confirmDateEnd)
+      | 
+      input(type="submit", value="Отобрать")
+  if user.master
+    form(action="/gems/assign", method="get")
+      input(type="submit", value="Распределить")
+  table
+    thead
+      th Тип
+      th Дата<br>добычи
+      th Дата<br>назначения
+      th Дата<br>подтверждения<br>передачи
+      th Добыл
+      th Назначена
+      th Назначена<br>вручную
+      th Владелец
+      th Статус
+      th
+    tbody
+      each gem in gems
+        tr
+          td= gem.type && gem.type.name
+          td= gem.mineDate.toLocaleString()
+          td= gem.assignDate && gem.assignDate.toLocaleString()
+          td= gem.confirmDate && gem.confirmDate.toLocaleString()
+          td= gem.miner && gem.miner.name
+          td= gem.assignedBy && gem.assignedBy.name
+          td= gem.manualAssignment ? 'Да' : 'Нет'
+          td= gem.owner && gem.owner.name
+          td= statusesMap[gem.status]
+          td
+            if user.master
+              a(href="/gems/" + gem._id + "/delete" + '?ref=' + ref)= gem.deleted ? "Восстановить" : "Удалить"
