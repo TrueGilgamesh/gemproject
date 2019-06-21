@@ -152,7 +152,7 @@ exports.update = (req, res, next) => {
 
 exports.getAddPreferences = (req, res, next) => {
   const options = { id: req.params.id };
-  options.number = parseInt(req.query.number) || 1;
+  options.number = parseInt(req.query.number);
 
   Promise.all([db.getUser(req.params.id), db.getGemTypes()])
     .then(result => {
@@ -160,6 +160,13 @@ exports.getAddPreferences = (req, res, next) => {
       const gemTypes = result[1];
 
       if (user === null) throw createError(404);
+
+      if (
+        (!user.favorites || user.favorites.length === 0) &&
+        options.number === 0
+      ) {
+        options.number = 1;
+      }
 
       options.user = user;
       options.gemTypes = gemTypes;
