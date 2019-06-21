@@ -3,19 +3,19 @@ extends layout
 mixin preference(preference)
   p
     - const favGemTypeId = preference && preference.gemType._id.toString()
-    select#gemtype(name="gemtype" required)
+    select#gemtype(name="gemtype", required)
       option(value="") Выберите драгоценность
       each gemType in gemTypes
         - const gemTypeId = gemType._id.toString();
         - const selected = gemTypeId === favGemTypeId ? true : false
-        option(value=gemType._id selected=selected)= gemType.name
+        option(value=gemType._id, selected=selected)= gemType.name
     | 
     - const priority = preference && preference.priority
-    input#priority(type="number", name="priority" min="1" max="10" required value=priority)
+    input#priority(type="number", name="priority" min="1" max="10", value=priority, required)
     if preference
       | 
       label(for="deleted") Удалить 
-      input(type="checkbox", name='deleted[' + favGemTypeId + ']' value="on")
+      input(type="checkbox", name='deleted[' + favGemTypeId + ']', value="on")
 
 block content
   h1 Редактирование предпочтений

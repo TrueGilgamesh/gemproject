@@ -8,15 +8,15 @@ block content
       p
         label(for="login") Логин:
         br
-        input#login(type="text", name="login")
+        input#login(type="text", name="login", required)
       p
         label(for="password") Пароль:
         br
-        input#password(type="password", name="password")
+        input#password(type="password", name="password", required)
       p
         label(for="name") Имя:
         br
-        input#name(type="text", name="name")
+        input#name(type="text", name="name", required)
       if role === 'gnome'
         p
           label(for="master") Мастер:

@@ -7,7 +7,7 @@ block content
       p
         label(for="name") Имя
         br
-        input#name(type="text", name="name" value=gemType.name)
+        input#name(type="text", name="name" value=gemType.name, required)
       p
         label(for="deleted") Удален 
         input#deleted(type="checkbox", name="deleted" checked=gemType.deleted)
